@@ -4,6 +4,10 @@ import numpy as np
 import math
 from PIL import Image
 from pipeline import full_pipeline
+import pickle
+
+with open("model.pkl", 'rb') as file:
+    model = pickle.load(file)
 
 st.title('If You Were a Superhero, Would You Be GOOD, NEUTRAL, or BAD?!?!')
  
@@ -61,6 +65,10 @@ st.write(data)
 # To do: order better, set default values?
 st.sidebar.subheader("Enter Your Information Here!")
 
+#add something to get value for unnamed
+
+#add something to get name
+
 gender = st.sidebar.selectbox("What is your gender?", data["gender"].drop_duplicates())
 
 eye_color = st.sidebar.selectbox("What is your eye color?", data["eye color"].drop_duplicates())
@@ -83,10 +91,15 @@ weight = st.sidebar.slider("What is your weight in pounds?", min_weight, max_wei
 
 # Data frame containing user input (no unnamed or name or alignment)
 # TO DO: Need to modify this structure here so it's correct to pass into the model
+# add unnamed and name to user_data
 user_data = pd.DataFrame(np.array([[gender, eye_color, race, hair_color, height, publisher, skin_color, weight]]),
 columns = ["gender", "eye color", "race", "hair color", "height", "publisher", "skin color", "weight"])
 st.subheader("User input:")
 st.write(user_data)
+
+user_input_prepared = pd.DataFrame(user_data, columns =['Unnamed: 0', 'name', 'Gender', 'Eye color', 'Race', 'Hair color', 'Height', 'Publisher', 'Skin color', 'Weight'])
+user_input_prepared = full_pipeline.transform(user_input_prepared)
+user_prediction = clf.predict(user_input_prepared)
 
 if 'number_submitted' not in st.session_state:
     st.session_state.number_submitted = 0
@@ -96,15 +109,15 @@ submit = st.button("Calculate my superhero affinity!")
 st.write("Number of Hack Clubbers Who Have Demoed Our Project: "+str(st.session_state.number_submitted))
 
 if submit:
-    model_output = 0 # TO DO: Pass user_data into model here and get output
-    if model_output == 0:
+    user_prediction = 0 # TO DO: Pass user_data into model here and get output
+    if user_prediction == 0:
         alignment = "BAD"
         # image = Image.open('bad.png')
-    elif model_output == 1:
-        alignment = "NEUTRAL"
+    elif user_prediction == 1:
+        alignment = "GOOD"
         # image = Image.open('neutral.png')
     else:
-        alignment = "GOOD"
+        alignment = "NEUTRAL"
         # image = Image.open('good.png')
     st.session_state.number_submitted+=1
     
