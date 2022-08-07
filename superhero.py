@@ -6,7 +6,7 @@ from PIL import Image
 import pickle
 import joblib
 
-full_pipeline = joblib.load('full_pipeline.joblib')
+full_pipeline = joblib.load('pipeline.joblib')
 
 with open("model.pkl", 'rb') as file:
     model = pickle.load(file)
