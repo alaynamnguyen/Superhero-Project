@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import math
 from PIL import Image
+from pipeline import full_pipeline
 
 st.title('If You Were a Superhero, Would You Be GOOD, NEUTRAL, or BAD?!?!')
  
