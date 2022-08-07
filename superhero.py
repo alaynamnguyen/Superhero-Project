@@ -26,8 +26,8 @@ import random
 
 # full_pipeline = joblib.load('pipeline.joblib')
 
-with open("model.pkl", 'rb') as file:
-    clf = pickle.load(file)
+# with open("model.pkl", 'rb') as file:
+#     clf = pickle.load(file)
 
 st.title('If You Were a Superhero, Would You Be GOOD, NEUTRAL, or BAD?!?!')
  
