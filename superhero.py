@@ -6,10 +6,27 @@ from PIL import Image
 import pickle
 import joblib
 
+from sklearn.base import BaseEstimator, TransformerMixin
+
+class CustomRemover(BaseEstimator, TransformerMixin):
+
+    def __init__(self, useless_attribs):
+        self.useless_attribs = useless_attribs
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        X_copy = X.copy()
+
+        X_copy = X_copy.drop(self.useless_attribs, axis=1)
+
+        return X_copy
+
 full_pipeline = joblib.load('pipeline.joblib')
 
 with open("model.pkl", 'rb') as file:
-    model = pickle.load(file)
+    clf = pickle.load(file)
 
 st.title('If You Were a Superhero, Would You Be GOOD, NEUTRAL, or BAD?!?!')
  
@@ -69,9 +86,9 @@ st.write(data)
 # To do: order better, set default values?
 st.sidebar.subheader("Enter Your Information Here!")
 
-unnamed = "Sidekick"
+name = st.sidebar.text_input("What is your superhero name?", placeholder ="Enter")
 
-name = st.sidebar.text_input("What is your superhero name?")
+unnamed = st.sidebar.text_input("What is your sidekick's name?", placeholder ="Enter")
 
 gender = st.sidebar.selectbox("What is your gender?", data["gender"].drop_duplicates())
 
