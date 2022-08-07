@@ -7,22 +7,22 @@ import pickle
 # import joblib
 import random
 
-from sklearn.base import BaseEstimator, TransformerMixin
+# from sklearn.base import BaseEstimator, TransformerMixin
 
-class CustomRemover(BaseEstimator, TransformerMixin):
+# class CustomRemover(BaseEstimator, TransformerMixin):
 
-    def __init__(self, useless_attribs):
-        self.useless_attribs = useless_attribs
+#     def __init__(self, useless_attribs):
+#         self.useless_attribs = useless_attribs
 
-    def fit(self, X, y=None):
-        return self
+#     def fit(self, X, y=None):
+#         return self
 
-    def transform(self, X):
-        X_copy = X.copy()
+#     def transform(self, X):
+#         X_copy = X.copy()
 
-        X_copy = X_copy.drop(self.useless_attribs, axis=1)
+#         X_copy = X_copy.drop(self.useless_attribs, axis=1)
 
-        return X_copy
+#         return X_copy
 
 # full_pipeline = joblib.load('pipeline.joblib')
 
