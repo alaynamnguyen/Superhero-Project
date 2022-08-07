@@ -9,6 +9,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from PIL import Image
+from sklearn.impute import SimpleImputer
 
 # Pipeline things
 class CustomRemover(BaseEstimator, TransformerMixin):
@@ -25,9 +26,6 @@ class CustomRemover(BaseEstimator, TransformerMixin):
         X_copy = X_copy.drop(self.useless_attribs, axis=1)
 
         return X_copy  
-   
-   
-   from sklearn.impute import SimpleImputer
 
 useless_attribs = ["name", "Unnamed: 0"]
 num_attribs = ['Height', 'Weight']

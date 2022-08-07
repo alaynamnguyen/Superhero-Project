@@ -12,10 +12,11 @@ with open("model.pkl", 'rb') as file:
 st.title('If You Were a Superhero, Would You Be GOOD, NEUTRAL, or BAD?!?!')
  
 DATA = 'heroes_information.csv'
+POWERS = 'super_hero_powers.csv'
 
 @st.cache
-def load_data(nrows):
-    data = pd.read_csv(DATA, nrows=nrows)
+def load_data(file):
+    data = pd.read_csv(file)
     lowercase = lambda x: str(x).lower()
     data.rename(lowercase, axis='columns', inplace=True)
     return data
@@ -53,7 +54,8 @@ def closest(data, gender, eye_color, race, hair_color, height, publisher, skin_c
 # Create a text element and show that data is loading
 data_load_state = st.text("Loading data...")
 # Load 100 rows of data into the dataframe
-data = load_data(100)
+data = load_data(DATA)
+powers = load_data(POWERS)
 # Show that data was successfully loaded
 data_load_state.text('Loading data complete!!!')
 
@@ -65,9 +67,9 @@ st.write(data)
 # To do: order better, set default values?
 st.sidebar.subheader("Enter Your Information Here!")
 
-#add something to get value for unnamed
+unnamed = "Sidekick"
 
-#add something to get name
+name = st.sidebar.text_input("What is your superhero name?")
 
 gender = st.sidebar.selectbox("What is your gender?", data["gender"].drop_duplicates())
 
@@ -91,15 +93,16 @@ weight = st.sidebar.slider("What is your weight in pounds?", min_weight, max_wei
 
 # Data frame containing user input (no unnamed or name or alignment)
 # TO DO: Need to modify this structure here so it's correct to pass into the model
-# add unnamed and name to user_data
-user_data = pd.DataFrame(np.array([[gender, eye_color, race, hair_color, height, publisher, skin_color, weight]]),
-columns = ["gender", "eye color", "race", "hair color", "height", "publisher", "skin color", "weight"])
+# add unnamed and name to user_data --> added
+user_data = pd.DataFrame(np.array([[unnamed, name, gender, eye_color, race, hair_color, height, publisher, skin_color, weight]]),
+columns = ["unnamed: 0", "name", "gender", "eye color", "race", "hair color", "height", "publisher", "skin color", "weight"])
 st.subheader("User input:")
 st.write(user_data)
 
 user_input_prepared = pd.DataFrame(user_data, columns =['Unnamed: 0', 'name', 'Gender', 'Eye color', 'Race', 'Hair color', 'Height', 'Publisher', 'Skin color', 'Weight'])
 user_input_prepared = full_pipeline.transform(user_input_prepared)
 user_prediction = clf.predict(user_input_prepared)
+user_prediction = 0
 
 if 'number_submitted' not in st.session_state:
     st.session_state.number_submitted = 0
@@ -109,23 +112,22 @@ submit = st.button("Calculate my superhero affinity!")
 st.write("Number of Hack Clubbers Who Have Demoed Our Project: "+str(st.session_state.number_submitted))
 
 if submit:
-    user_prediction = 0 # TO DO: Pass user_data into model here and get output
     if user_prediction == 0:
         alignment = "BAD"
-        # image = Image.open('bad.png')
+        image = Image.open('assets/bad.jpeg')
     elif user_prediction == 1:
         alignment = "GOOD"
-        # image = Image.open('neutral.png')
+        image = Image.open('assets/good.jpeg')
     else:
         alignment = "NEUTRAL"
-        # image = Image.open('good.png')
+        image = Image.open('assets/neutral.jpeg')
     st.session_state.number_submitted+=1
     
     st.subheader("Here's the verdict...")
 
     st.write("Your alignment is...")
     st.subheader(alignment)
-    # st.image(image)
+    st.image(image)
 
     # Retrieve closest 3 matches to what the user inputted and display
     search = closest(data, gender, eye_color, race, hair_color, height, publisher, skin_color, weight, top=3)
@@ -133,4 +135,9 @@ if submit:
     st.write("And these are the top 3 superheroes who are most similar to you!")
     st.write(search)
 
-
+    # To do: improve this section by only showing the cells that are True?
+    st.write("These are some powers that would suit you based on these similar superheroes!")
+    matches = search["name"]
+    for match in matches:
+        row_to_check = powers.loc[(powers["hero_names"] == match)]
+        st.write(row_to_check)
