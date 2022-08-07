@@ -5,6 +5,7 @@ import math
 from PIL import Image
 import pickle
 import joblib
+import random
 
 from sklearn.base import BaseEstimator, TransformerMixin
 
@@ -118,10 +119,10 @@ columns = ["unnamed: 0", "name", "gender", "eye color", "race", "hair color", "h
 st.subheader("User input:")
 st.write(user_data)
 
-user_input_prepared = pd.DataFrame(user_data, columns =['Unnamed: 0', 'name', 'Gender', 'Eye color', 'Race', 'Hair color', 'Height', 'Publisher', 'Skin color', 'Weight'])
-user_input_prepared = full_pipeline.transform(user_input_prepared)
-user_prediction = clf.predict(user_input_prepared)
-user_prediction = 0
+# user_input_prepared = pd.DataFrame(user_data, columns =['Unnamed: 0', 'name', 'Gender', 'Eye color', 'Race', 'Hair color', 'Height', 'Publisher', 'Skin color', 'Weight'])
+# user_input_prepared = full_pipeline.transform(user_input_prepared)
+# user_prediction = clf.predict(user_input_prepared)
+user_prediction = random.randrange(0,1,2)
 
 if 'number_submitted' not in st.session_state:
     st.session_state.number_submitted = 0
