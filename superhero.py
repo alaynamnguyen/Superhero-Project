@@ -4,7 +4,7 @@ import numpy as np
 import math
 from PIL import Image
 import pickle
-import joblib
+# import joblib
 import random
 
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -24,7 +24,7 @@ class CustomRemover(BaseEstimator, TransformerMixin):
 
         return X_copy
 
-full_pipeline = joblib.load('pipeline.joblib')
+# full_pipeline = joblib.load('pipeline.joblib')
 
 with open("model.pkl", 'rb') as file:
     clf = pickle.load(file)
@@ -125,7 +125,7 @@ st.write(user_data)
 user_prediction = random.randrange(0,1,2)
 
 if 'number_submitted' not in st.session_state:
-    st.session_state.number_submitted = 0
+    st.session_state.number_submitted = 1
 
 submit = st.button("Calculate my superhero affinity!")
 
