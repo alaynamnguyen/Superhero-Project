@@ -3,8 +3,10 @@ import pandas as pd
 import numpy as np
 import math
 from PIL import Image
-from pipeline import full_pipeline
 import pickle
+import joblib
+
+full_pipeline = joblib.load('full_pipeline.joblib')
 
 with open("model.pkl", 'rb') as file:
     model = pickle.load(file)
