@@ -4,7 +4,7 @@ import numpy as np
 import math
 from PIL import Image
 import pickle
-import joblib
+# import joblib
 import random
 from utils import closest
 
@@ -22,7 +22,9 @@ def load_data(file):
 
 # configuring streamlit
 
-full_pipeline = joblib.load('pipeline.joblib')
+# full_pipeline = joblib.load('pipeline.joblib')
+with open("pipeline.pkl", 'rb') as file:
+    full_pipeline = pickle.load(file)
 
 with open("model.pkl", 'rb') as file:
     clf = pickle.load(file)
