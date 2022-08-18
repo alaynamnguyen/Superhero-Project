@@ -88,13 +88,13 @@ submit = st.button("Calculate my superhero affinity!")
 if submit:
     pred = clf.predict(user_input_prepared)[0]
     
-     if pred == 0:
+    if pred == 0:
          alignment = "BAD"
          image = Image.open('assets/bad.jpeg')
-     elif pred == 1:
+    elif pred == 1:
          alignment = "GOOD"
          image = Image.open('assets/good.jpeg')
-     else:
+    else:
         alignment = "NEUTRAL"
         image = Image.open('assets/neutral.jpeg')
         
