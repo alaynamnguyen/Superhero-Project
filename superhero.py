@@ -7,6 +7,8 @@ import pickle
 # import joblib
 import random
 
+# f r e a k y
+
 # from sklearn.base import BaseEstimator, TransformerMixin
 
 # class CustomRemover(BaseEstimator, TransformerMixin):
