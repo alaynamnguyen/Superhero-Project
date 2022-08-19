@@ -1,4 +1,5 @@
 import streamlit as st
+import sklearn
 import pandas as pd
 import numpy as np
 import math
@@ -64,7 +65,6 @@ class CustomRemover(BaseEstimator, TransformerMixin):
         X_copy = X_copy.drop(self.useless_attribs, axis=1)
 
         return X_copy
-
 
 # configuring streamlit
 
