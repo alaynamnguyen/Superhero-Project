@@ -113,18 +113,15 @@ if submit:
     st.subheader(alignment)
     st.image(image)
 
-
-
-
     # Retrieve closest 3 matches to what the user inputted and display
-    # search = closest(data, gender, eye_color, race, hair_color, height, publisher, skin_color, weight, top=3)
+    search = closest(data, gender, eye_color, race, hair_color, height, publisher, skin_color, weight, top=3)
 
-    # st.write("And these are the top 3 superheroes who are most similar to you!")
-    # st.write(search)
+    st.write("And these are the top superheroes (or supervillains) who are most similar to you!")
+    st.write(search)
 
     # To do: improve this section by only showing the cells that are True?
-    # st.write("These are some powers that would suit you based on these similar superheroes!")
-    # matches = search["name"]
-    # for match in matches:
-        #row_to_check = powers.loc[(powers["hero_names"] == match)]
-        #st.write(row_to_check)
+    st.write("These are some powers that would suit you based on these similar superheroes!")
+    matches = search["name"]
+    for match in matches:
+        row_to_check = powers.loc[(powers["hero_names"] == match)]
+        st.write(row_to_check)
