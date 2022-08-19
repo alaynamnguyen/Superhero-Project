@@ -26,8 +26,8 @@ def load_data(file):
 with open("pipeline.pkl", 'rb') as file:
     full_pipeline = pickle.load(file)
 
-with open("model.pkl", 'rb') as file:
-    clf = pickle.load(file)
+with open("model.pkl", 'rb') as file2:
+    clf = pickle.load(file2)
 
 st.title('If You Were a Superhero, Would You Be GOOD, NEUTRAL, or BAD?!?!')
  
