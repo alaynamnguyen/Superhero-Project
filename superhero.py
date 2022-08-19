@@ -7,6 +7,7 @@ import pickle
 # import joblib
 import random
 from utils import closest
+from utils import CustomRemover
 
 # loading
 
@@ -74,10 +75,9 @@ max_weight = int(data["weight"].max())
 min_weight = 0
 weight = st.sidebar.slider("What is your weight in pounds?", min_weight, max_weight, int((min_weight+max_weight)/2))
 
+
 # get user data
-user_data = pd.DataFrame(np.array([[unnamed, name, gender, eye_color, race, hair_color, height, publisher, skin_color, weight]]))
-user_input_prepared = pd.DataFrame(user_data, columns =['Unnamed: 0', 'name', 'Gender', 'Eye color', 'Race', 'Hair color', 'Height', 'Publisher', 'Skin color', 'Weight'])
-user_input_prepared = full_pipeline.transform(user_input_prepared)
+
 
 # visitor counter
 if 'number_submitted' not in st.session_state:
@@ -89,6 +89,10 @@ st.write("Number of Hack Clubbers Who Have Demoed Our Project: "+str(st.session_
 submit = st.button("Calculate my superhero affinity!")
 
 if submit:
+    user_input_prepared = pd.DataFrame(np.array([[unnamed, name, gender, eye_color, race, hair_color, height, publisher, skin_color, weight]]), columns =['Unnamed: 0', 'name', 'Gender', 'Eye color', 'Race', 'Hair color', 'Height', 'Publisher', 'Skin color', 'Weight'])
+    st.write(user_input_prepared)
+    user_input_prepared = full_pipeline.transform(user_input_prepared)
+
     pred = clf.predict(user_input_prepared)[0]
     
     if pred == 0:
