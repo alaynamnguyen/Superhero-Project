@@ -22,7 +22,10 @@ def load_data(file):
 
 # configuring streamlit
 
-full_pipeline = joblib.load('pipeline.joblib')
+# full_pipeline = joblib.load('pipeline.joblib')
+
+with open("pipeline.pkl", 'rb') as file2:
+    full_pipeline = pickle.load(file2)
 
 with open("model.pkl", 'rb') as file:
     clf = pickle.load(file)
